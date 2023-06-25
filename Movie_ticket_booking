@@ -29,13 +29,6 @@ class movielist:
         self.movieprice=price
         self.language=language
 
-class cart:
-    def __init__(self,ticketid,movieid,userid,bookedAt):
-        self.ticketid=ticketid
-        self.movieid=movieid
-        self.userid=userid
-        self.bookedAt=bookedAt
-
 class movieshowcase(ticket_booking):
     def __init__(self,id,name,email,password,role):
         super().__init__(id,name,email,password,role)
