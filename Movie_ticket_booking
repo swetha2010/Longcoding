@@ -1,0 +1,159 @@
+users=[]
+movielistitems=[]
+bookings_list=[]
+class ticket_booking:
+    booking_count=0
+    def __init__(self,id,name,email,password,role):
+        self.id=id
+        self.name=name
+        self.email=email
+        self.password=password
+        self.role=role
+    def hardcoded(self):
+        users.append(self)
+        return users
+    def validatelogin(self,email,password):
+        for i in users:
+            if (i.email==email and i.password==password):
+                return i
+            else:
+                return False
+        return None
+    def welcome(self):
+        print("Hi",self.name)
+
+class movielist:
+    def __init__(self,movieid,moviename,price,language):
+        self.movieid=movieid
+        self.moviename=moviename
+        self.movieprice=price
+        self.language=language
+
+class cart:
+    def __init__(self,ticketid,movieid,userid,bookedAt):
+        self.ticketid=ticketid
+        self.movieid=movieid
+        self.userid=userid
+        self.bookedAt=bookedAt
+
+class movieshowcase(ticket_booking):
+    def __init__(self,id,name,email,password,role):
+        super().__init__(id,name,email,password,role)
+        self.cart=[]
+    
+    
+    def movie_for_customers(self):
+        stayInCustomerMenu=True
+        while(stayInCustomerMenu):
+            print("customer menu")
+            print("1.Display the movie")
+            print(".Add to Cart")
+            print("3.Booked History")
+            print("4.Delete your history")
+            print("5.Logout")
+            choice=int(input("enter your choice:"))
+            if(choice==1):
+                movie1=movielist(1,"Theri","200","Tamil")
+                movie2=movielist(2,"Kanaa","150","Tamil")
+                movie3=movielist(3,"sachin","180","Tamil")
+                movielistitems.append(movie1)
+                movielistitems.append(movie2)
+                movielistitems.append(movie3)
+            
+                for j in movielistitems:
+                    print(j.movieid)
+                    print(j.moviename)
+                    print(j.movieprice)
+                    print(j.language)
+    
+                movieid=int(input("enter the id:"))
+                moviename=input("enter the movie name:")
+                movieprice=input("enter the movieprice:")
+                language=input("enter the language:")
+                booking={'movieid':movieid,
+                'moviename':moviename,
+                'movieprice':movieprice,
+                'movielanguage':language
+                }
+                bookings_list.append(booking)
+                
+                   
+            if choice==2:
+                print("movielist:")
+                movieid=int(input("enter the id:"))
+                moviename=input("enter the movie name:")
+                movieprice=input("enter the movieprice:")
+                language=input("enter the language:")
+                cart_item={'movieid':movieid,
+                'moviename':moviename,
+                'movieprice':movieprice,
+                'movielanguage':language
+                }
+                self.cart.append(cart_item)
+                print("Item added to cart successfully.")
+                view_cart=input("do you want to see the cart?(y/n):")
+                if view_cart.lower()=='y':
+                    if len(self.cart)==0:
+                        print("your cart is empty.")
+                            
+                    else:
+                        print("your cart")
+                        for i in self.cart:
+                            print("movieid:",i['movieid'])
+                            print("moviename:",i['moviename'])
+                            print("movieprice:",i['movieprice'])
+                            print("movielanguage:",i['movielanguage'])
+                        print("payment options:")
+                        print("1.card")
+                        print(".UPI")
+                        print("3.cash on delivery")
+                        payment_choice=int(input("choose an payment option:"))
+                        if(payment_choice==1):
+                            print("payment successful thankyou for using this card.")
+                        elif(payment_choice==2):
+                            print("payment successful thankyou for using this UPI")
+                        elif(payment_choice==3):
+                            print("payment successful thankyou for using this cash on delivery.")
+                        else:
+                            print("Invalid payment option")
+                        print("******************")
+            if(choice==3) :   
+                for i in bookings_list:
+                    print("movieid:",i['movieid'])
+                    print("moviename:",i['moviename'])
+                    print("movieprice:",i['movieprice'])
+                    print("movielanguage:",i['movielanguage'])
+                    print("..................")
+            if(choice==4):
+                print("...........")
+                if(len(bookings_list)==0):
+                    print("no booking history")
+                else:
+                    for i in range(0,1):
+                        bookings_list.pop()
+                    print("deleted successfully")
+                        
+                        
+            if(choice==5):
+                print("logout successfully")
+                break
+                                
+                    
+                    
+                
+        
+if __name__=="__main__":
+    app=ticket_booking(1,"nithvik","nithvik125@gmail.com","nithvik0312","customer")
+    app.hardcoded()
+    app=ticket_booking(2,"sarvesh","sarvesh123@gmail.com","sarvesh1002","customer")
+    app.hardcoded()
+    app=ticket_booking(3,"jeshwi","jeshwi546@gmail.com","jeshwi0706","admin")
+    app.hardcoded()
+    
+    
+    login_user=app.validatelogin("nithvik125@gmail.com","nithvik0312")
+    
+    if login_user.role=='customer':
+        movie_work=movieshowcase(login_user.id,login_user.name,login_user.email,login_user.password,login_user.role)
+        movie_work.welcome()
+        movie_work.movie_for_customers()
